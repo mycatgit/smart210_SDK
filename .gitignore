@@ -1,0 +1,17 @@
+*.o
+*.depend
+
+# 编译产物不上传
+uboot/arch/arm/cpu/armv7/s5pc1xx/asm-offsets.s
+uboot/include/generated/asm-offsets.h
+uboot/include/generated/generic-asm-offsets.h
+uboot/lib/asm-offsets.s
+uboot/spl/smart210-spl.bin
+uboot/System.map
+uboot/board/samsung/smart210/tools/mksmart210spl.exe
+uboot/smart210-uboot.bin
+uboot/u-boot
+uboot/u-boot.bin
+uboot/u-boot.lds
+uboot/u-boot.map
+uboot/u-boot.srec
