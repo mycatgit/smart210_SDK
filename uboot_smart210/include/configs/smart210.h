@@ -35,11 +35,11 @@
 #define CONFIG_S5PC110		1	/* which is in a S5PC110 SoC */
 #define CONFIG_SMART210		1
 
-/*Ìí¼ÓMENU²Ëµ¥ make by nietao Email£ºnietaooldman@126.com */
+/*ï¿½ï¿½ï¿½ï¿½MENUï¿½Ëµï¿½ make by nietao Emailï¿½ï¿½nietaooldman@126.com */
 
 #define  CONFIG_CMD_MENU   1
 
-/* ½áÊø */
+/* ï¿½ï¿½ï¿½ï¿½ */
 
 #include <asm/arch/cpu.h>		/* get chip and board defs */
 
@@ -108,9 +108,6 @@
 #define S5PC210_DEFAULT_UART_OFFSET	0x020000
 
 /* SD/MMC configuration */
-#define CONFIG_GENERIC_MMC		1
-#define CONFIG_MMC			1
-#define CONFIG_S5P_MMC			1
 
 /* PWM */
 #define CONFIG_PWM			1
@@ -122,23 +119,20 @@
 #include <config_cmd_default.h>
 
 #define CONFIG_CMD_PING
-#define CONFIG_CMD_ELF
 #define CONFIG_CMD_DHCP
-#define CONFIG_CMD_MMC
-#define CONFIG_CMD_FAT
 #if 0
 //#undef CONFIG_CMD_NET
 //#undef CONFIG_CMD_NFS
 #endif
 #define CONFIG_BOOTDELAY		3
-#define CONFIG_BOOTCOMMAND                                      "nand read 0x20000000 0x300000 0x500000;bootm 0x20000000"
+#define CONFIG_BOOTCOMMAND                                      "nand read 0x20000000 0x300000 0x600000;bootm 0x20000000"
 #define CONFIG_ZERO_BOOTDELAY_CHECK
 
 /* Miscellaneous configurable options */
 #define CONFIG_SYS_LONGHELP             /* undef to save memory */
 #define CONFIG_SYS_HUSH_PARSER          /* use "hush" command parser    */
 #define CONFIG_SYS_PROMPT_HUSH_PS2      "> "
-#define CONFIG_SYS_PROMPT              "[Smart210]# "
+#define CONFIG_SYS_PROMPT              "[xSmart210]# "
 #define CONFIG_SYS_CBSIZE               256     /* Console I/O Buffer Size*/
 #define CONFIG_SYS_PBSIZE               384     /* Print Buffer Size */
 #define CONFIG_SYS_MAXARGS              16      /* max number of command args */
@@ -305,7 +299,7 @@
 	defined(CONFIG_CLK_800_100_166_133) || \
 	defined(CONFIG_CLK_400_200_166_133) || \
 	defined(CONFIG_CLK_400_100_166_133)
-/*ÄÚ´æ¿ØÖÆÆ÷ÉèÖÃ*/
+/*ï¿½Ú´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
 #if defined(CONFIG_MCP_SINGLE)
 
 #define DMC0_MEMCONTROL		0x00202400	// MemControl	BL=4, 1Chip, DDR2 Type, dynamic self refresh, force precharge, dynamic power down off
@@ -415,11 +409,11 @@
 #define CFG_PHY_KERNEL_BASE	MEMORY_BASE_ADDRESS + 0x8000
 
 /***Modified by nietao ***/
-#define CONFIG_ETHADDR		00:40:5c:26:0a:5b
-#define CONFIG_NETMASK          255.255.255.0
-#define CONFIG_IPADDR		121.49.127.15
-#define CONFIG_SERVERIP		121.49.127.191 
-#define CONFIG_GATEWAYIP	121.49.127.1
+#define CONFIG_ETHADDR		aa:40:5c:26:0a:5b
+#define CONFIG_NETMASK      255.255.255.0
+#define CONFIG_IPADDR		192.168.0.111
+#define CONFIG_SERVERIP		192.168.0.100
+#define CONFIG_GATEWAYIP	192.168.0.1
 /*   For nand driver   */
 #define CONFIG_CMD_NAND
 #if defined(CONFIG_CMD_NAND)
