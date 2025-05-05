@@ -25,7 +25,6 @@ source /etc/environment
 
 ```
 
-
 # uboot
 
 ## 编译
@@ -36,7 +35,6 @@ make distclean
 make smart210_config
 make
 ```
-
 
 ## 下载
 
@@ -53,3 +51,35 @@ nand write 0x20000000 0 40000
 因为env环境变量存放在0x40000开头的16KB，如果uboot固件大于256KB，那么会覆盖掉env。导致uboot运行时检查出来env的crc不对（被uboot覆盖），从而会重新写入default env这样会覆盖掉uboot代码。
 
 目前临时做法是保证uboot固件小于256kb
+
+# linux
+
+
+## 配置
+
+默认原厂配置
+
+```c
+make mrproper // 如果出现很多异常修改，多半是之前残留配置导致需要执行该命令
+make smart210_defconfig
+make menuconfig
+```
+
+## 编译
+
+```shell
+source /etc/environment # 运行一次配置下工具链
+make smart210_defconfig
+make -j32
+make uImage
+```
+
+## 下载
+
+```shell
+tftp 20000000 uImage
+nand erase 0x300000 0x600000
+nand write 0x20000000 0x300000 0x600000
+
+setenv bootcmd "nand read 0x20000000 0x300000 0x600000;bootm 0x20000000"
+```
