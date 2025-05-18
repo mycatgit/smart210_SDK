@@ -15,3 +15,6 @@ uboot/u-boot.bin
 uboot/u-boot.lds
 uboot/u-boot.map
 uboot/u-boot.srec
+*.cmd
+
+
