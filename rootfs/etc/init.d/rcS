@@ -1,0 +1,8 @@
+#! /bin/sh
+ifconfig eth0 192.168.0.111 netmask 255.255.255.0;
+route add default gw 192.168.0.1
+/bin/mount -a
+/bin/mount -t tmpfs mdev /dev
+/bin/echo /sbin/mdev > /proc/sys/kernel/hotplug
+mdev -s
+#mount -t nfs -o nolock 192.168.0.100:/nfs /mnt
