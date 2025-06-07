@@ -754,11 +754,11 @@ static void lcd_cfg_gpio(struct platform_device *pdev)
 	/* mDNIe SEL: why we shall write 0x2 ? */
 	writel(0x2, S5P_MDNIE_SEL);
 
-	/* drive strength to 2x ....(max for smdkv210) */
-	writel(0xaaaaaaaa, S5PV210_GPF0_BASE + 0xc);
-	writel(0xaaaaaaaa, S5PV210_GPF1_BASE + 0xc);
-	writel(0xaaaaaaaa, S5PV210_GPF2_BASE + 0xc);
-	writel(0x000000aa, S5PV210_GPF3_BASE + 0xc);
+	/* drive strength to 1x ....(max for smdkv210) */
+	writel(0x00000080, S5PV210_GPF0_BASE + 0xc);
+	writel(0x00000000, S5PV210_GPF1_BASE + 0xc);
+	writel(0x00000000, S5PV210_GPF2_BASE + 0xc);
+	writel(0x00000000, S5PV210_GPF3_BASE + 0xc);
 }
 
 static int lcd_backlight_on(struct platform_device *pdev)
@@ -1483,7 +1483,7 @@ static int __init dm9000_set_mac(char *str) {
 		memcpy(mini210_dm9000_platdata.param_addr, addr, 6);
 	}
 
-	return 1;
+	return 0;
 }
 
 __setup("ethmac=", dm9000_set_mac);
@@ -1849,6 +1849,11 @@ static void __init mini210_machine_init(void)
 	mini210_dm9000_init();
 #endif
 
+	/* Disable USB PHY for soft reboot */
+	if (__raw_readl(S5P_RST_STAT) & (1 << 3)) {
+		__raw_writel(0, S5P_USB_PHY_CONTROL);
+	}
+
 	platform_add_devices(mini210_devices, ARRAY_SIZE(mini210_devices));
 
 #ifdef CONFIG_ANDROID_PMEM
@@ -1887,10 +1892,12 @@ static void __init mini210_machine_init(void)
 #ifdef CONFIG_FB_S3C_MINI210
 	{
 		struct s3cfb_lcd *mlcd = mini210_get_lcd();
+#if 0
 		if (!(mlcd->args & 0x0f)) {
 			if (readl(S5PV210_GPF0_BASE + 0x184) & 0x10)
 				mlcd->args |= (1 << 7);
 		}
+#endif
 		mini210_fb_data.lcd = mlcd;
 		s3c_fb_set_platdata(&mini210_fb_data);
 	}
