@@ -116,13 +116,22 @@
 */
 #define CONFIG_ENV_OVERWRITE
 #define CONFIG_EXTRA_ENV_SETTINGS				\
-		"set machid 1160\0"						\
-		"nfsboot=" 								\
-			"set bootargs root=/dev/nfs nfsroot=10.0.0.46:/home/pwn/Desktop/work/share/smart210/git/smart210-SDK/rootfs ip=10.0.0.98:10.0.0.46:10.0.0.1:255.255.255.0::eth0:off init=/linuxrc console=ttySAC0,115200;"    					\
-			"nfs 20000000 10.0.0.46:/home/pwn/Desktop/work/share/smart210/git/smart210-SDK/rootfs/uImage;bootm 20000000\0"	 \
+	 	"machid="	  							\
+	 		"998\0"\
 	 	"nandboot="	  							\
-	 		"nand read.jffs2 0x30007FC0 0x80000 0x500000;  bootm 0x30007FC0\0"			
+	 		"nand read 0x20000000 0x80000 0x600000;bootm 0x20000000\0"\
+	 	"bootargs="	  							\
+            "set bootargs root=/dev/mtdblock4 rw init=/linuxrc console=ttySAC0,115200\0"\
+        "debug_kernel="                            \
+            "tftp 20000000 uImage;bootm 20000000\0"\
+        "dl_kernel="                            \
+            "tftp 20000000 uImage;nand erase 0x80000 $filesize;nand write 0x20000000 0x80000 $filesize\0"\
+        "dl_boot="                              \
+            "nand erase 0 0x80000;tftp 20000000 smart210-spl.bin;nand write 20000000 0 $filesize;tftp 20004000 u-boot.bin;nand write 20004000 4000 $filesize;\0"
 /*
+		"nfsboot=" 								\
+			"set bootargs root=/dev/nfs nfsroot=10.0.0.46:/home/pwn/Desktop/work/share/smart210/git/smart210-SDK/rootfs ip=10.0.0.98:10.0.0.46:10.0.0.1:255.255.255.0::eth0:off init=/linuxrc console=ttySAC0,115200;\0"    					\
+			"nfs 20000000 10.0.0.46:/home/pwn/Desktop/work/share/smart210/git/smart210-SDK/rootfs/uImage;bootm 20000000\0"	 \
 #define CONFIG_EXTRA_ENV_SETTINGS					\
 	CONFIG_UPDATEB \
 	"updatek=" \
@@ -244,8 +253,8 @@
 #define DM9000_IO                               (CONFIG_DM9000_BASE)
 #define DM9000_DATA                             (CONFIG_DM9000_BASE + 0x4)
 #define CONFIG_CMD_PING
-#define CONFIG_IPADDR                   10.0.0.98
-#define CONFIG_SERVERIP                 10.0.0.20
+#define CONFIG_IPADDR                   192.168.0.111
+#define CONFIG_SERVERIP                 192.168.0.100
 #define CONFIG_ETHADDR                  1A:2A:3A:4A:5A:6A
 #endif /* CONFIG_CMD_NET */
 
